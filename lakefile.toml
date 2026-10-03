@@ -1,0 +1,6 @@
+name = "transport-span"
+version = "0.1.0"
+defaultTargets = ["TransportSpan", "TransportSpan.Demo"]
+
+[[lean_lib]]
+name = "TransportSpan"

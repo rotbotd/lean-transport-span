@@ -1,0 +1,15 @@
+# Log
+
+## 2026-10-03 — first vertical slice
+
+- Chose `transport { source -> target } equality payload` so the source and
+  target types remain visible rather than being reconstructed from a motive.
+- Implemented it as a term elaborator with structural endpoint comparison.
+  Changed occurrences become a single family parameter; unchanged fragments
+  remain fixed. The emitted object is `Eq.mp (congrArg family equality)
+  payload`, checked by the kernel.
+- Added vector transport and separate first/second/both occurrence examples.
+- Added a negative check for a displayed target not reached by the equality.
+- Exact emitted-term audit:
+  `firstOccurrence` produces `fun span => R span a`, while
+  `bothOccurrences` produces `fun span => R span span`.
