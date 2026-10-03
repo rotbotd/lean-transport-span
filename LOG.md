@@ -25,3 +25,14 @@
   `∀ i : Fin m, P m i`. The printed kernel term reconstructs precisely
   `fun span => ∀ i : Fin span, P span i`, so traversal preserves the link
   between a binder's changing domain and uses of its bound variable.
+
+## 2026-10-03 — first downstream use
+
+- Published the library at
+  `https://github.com/rotbotd/lean-transport-span`; the PPA formalization pins
+  commit `c415425` as its first external consumer.
+- The fixed-point induction transports membership from `f(other)` to `other`.
+  Its reaching-definitions proof also exposed an elaboration edge: when an
+  `if_pos` proof's type is inferred without an annotation, reduction can erase
+  the conditional endpoint that the span is meant to display. An explicitly
+  typed local equality retains it and elaborates normally.
