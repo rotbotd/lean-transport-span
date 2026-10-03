@@ -21,3 +21,7 @@
 - Added universal-proposition and function-type transports. These ensure the
   displayed span can expose a changed index beneath a binder rather than
   forcing an explicit motive.
+- Added a dependent-domain test from `∀ i : Fin n, P n i` to
+  `∀ i : Fin m, P m i`. The printed kernel term reconstructs precisely
+  `fun span => ∀ i : Fin span, P span i`, so traversal preserves the link
+  between a binder's changing domain and uses of its bound variable.

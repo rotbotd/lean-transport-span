@@ -28,6 +28,14 @@ def underFunctionType {α β : Type u} (F : α → Type u)
     {a b : α} (eq : a = b) (x : β → F a) : β → F b :=
   transport { (β → F a) -> (β → F b) } eq x
 
+theorem dependentDomain (P : (n : Nat) → Fin n → Prop)
+    {n m : Nat} (eq : n = m) (x : ∀ i : Fin n, P n i) :
+    ∀ i : Fin m, P m i :=
+  transport {
+    (∀ i : Fin n, P n i) ->
+    (∀ i : Fin m, P m i)
+  } eq x
+
 -- The span rejects a dishonest destination before the kernel sees a term.
 /--
 error: the displayed endpoint types differ somewhere not justified by the equality
