@@ -31,6 +31,30 @@ private partial def abstractSpan
         throwError "the displayed endpoint types differ somewhere not justified by the equality"
       let (e, changed) ← abstractSpan se te lhs rhs hole
       return (.proj sn si e, changed)
+  | .forallE name sDomain sBody sInfo,
+      .forallE _ tDomain tBody tInfo =>
+      unless sInfo == tInfo do
+        throwError "the displayed endpoint binders have different binder annotations"
+      let (domain, changedDomain) ←
+        abstractSpan sDomain tDomain lhs rhs hole
+      let (body, changedBody) ← abstractSpan sBody tBody lhs rhs hole
+      return (.forallE name domain body sInfo, changedDomain || changedBody)
+  | .lam name sDomain sBody sInfo, .lam _ tDomain tBody tInfo =>
+      unless sInfo == tInfo do
+        throwError "the displayed endpoint lambdas have different binder annotations"
+      let (domain, changedDomain) ←
+        abstractSpan sDomain tDomain lhs rhs hole
+      let (body, changedBody) ← abstractSpan sBody tBody lhs rhs hole
+      return (.lam name domain body sInfo, changedDomain || changedBody)
+  | .letE name sType sValue sBody sNondep,
+      .letE _ tType tValue tBody tNondep =>
+      unless sNondep == tNondep do
+        throwError "the displayed endpoint lets have incompatible dependency information"
+      let (type, changedType) ← abstractSpan sType tType lhs rhs hole
+      let (value, changedValue) ← abstractSpan sValue tValue lhs rhs hole
+      let (body, changedBody) ← abstractSpan sBody tBody lhs rhs hole
+      return (.letE name type value body sNondep,
+        changedType || changedValue || changedBody)
   | _, _ =>
       throwError
         "the displayed endpoint types differ somewhere not justified by the equality\nsource fragment:\n  {source}\ntarget fragment:\n  {target}"

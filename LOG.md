@@ -13,3 +13,11 @@
 - Exact emitted-term audit:
   `firstOccurrence` produces `fun span => R span a`, while
   `bothOccurrences` produces `fun span => R span span`.
+
+## 2026-10-03 — binder traversal
+
+- Extended endpoint comparison through `forall`, lambda, and local-let
+  expressions while preserving their bound-variable structure.
+- Added universal-proposition and function-type transports. These ensure the
+  displayed span can expose a changed index beneath a binder rather than
+  forcing an explicit motive.

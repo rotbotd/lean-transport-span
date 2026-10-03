@@ -13,7 +13,7 @@ one-variable family from their visible difference, and emits `congrArg`
 followed by `Eq.mp`. Lean's unchanged kernel checks the result.
 
 See `TransportSpan/Demo.lean` for first-, second-, and both-occurrence
-transports.
+transports, including changes beneath universal and function binders.
 
 For example, the last one elaborates to the same shape as:
 

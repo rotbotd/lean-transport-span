@@ -20,6 +20,14 @@ theorem bothOccurrences {α : Type u} (R : α → α → Prop)
     {a b : α} (eq : a = b) (x : R a a) : R b b :=
   transport { R a a -> R b b } eq x
 
+theorem underForall {α β : Type u} (R : α → β → Prop)
+    {a b : α} (eq : a = b) (x : ∀ y, R a y) : ∀ y, R b y :=
+  transport { (∀ y, R a y) -> (∀ y, R b y) } eq x
+
+def underFunctionType {α β : Type u} (F : α → Type u)
+    {a b : α} (eq : a = b) (x : β → F a) : β → F b :=
+  transport { (β → F a) -> (β → F b) } eq x
+
 -- The span rejects a dishonest destination before the kernel sees a term.
 /--
 error: the displayed endpoint types differ somewhere not justified by the equality
